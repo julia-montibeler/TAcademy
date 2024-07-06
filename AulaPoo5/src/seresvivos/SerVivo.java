@@ -1,3 +1,5 @@
+package seresvivos;
+
 public abstract class SerVivo {
     private String nomeCientifico;
     private String reino;
