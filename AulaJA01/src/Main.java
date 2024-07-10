@@ -74,6 +74,18 @@ public class Main {
 
         alunosRemovidos.forEach(alunos::remove);
 
+        //Exemplo da aula
+        ArrayList<String> alunosRemovidosCorrecao = new ArrayList<>();
+
+        alunos.values().removeIf(aluno -> {
+            if (aluno.getNota() > notaCorte) {
+                alunosRemovidosCorrecao.add(aluno.getNome());
+                return true;
+            }
+            return false;
+        });
+        //Fim exemplo da aula
+
         return alunosRemovidos;
     }
 
