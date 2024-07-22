@@ -1,5 +1,6 @@
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class Main {
@@ -75,5 +76,11 @@ public class Main {
                 .collect(Collectors.toList());
 
         listasCombinadas.forEach(n -> System.out.println(n));
+
+
+        List<Integer> listaCombinada = IntStream.range(0, lista.size())
+                .boxed()
+                .flatMap(i -> Arrays.asList(lista.get(i), lista2.get(i)).stream())
+                .collect(Collectors.toList());
     }
 }
