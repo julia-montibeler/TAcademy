@@ -26,4 +26,5 @@ public class LivroModel implements Serializable {
     private String autor;
     private Integer paginas;
     private String editora;
+    private String genero;
 }

@@ -36,7 +36,18 @@ public class LivroController {
 
     }
 
-    @PostMapping
+    @GetMapping("/genero/{genero}")
+    public ResponseEntity<Object> getLivroByGenero(@PathVariable(value="genero") String genero) {
+        Optional<LivroModel> product = livroRepository.findByGenero(genero);
+        if (product.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não há livros registrados para esse genero");
+        } else {
+            return ResponseEntity.status(HttpStatus.OK).body(product.get());
+        }
+
+    }
+
+    @PostMapping("/cadastro")
     public ResponseEntity<LivroModel> addLivro(@RequestBody @Valid LivroRecordDto livroDto) {
         LivroModel livroModel = new LivroModel();
         BeanUtils.copyProperties(livroDto, livroModel);
