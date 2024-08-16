@@ -16,6 +16,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/livro")
+@CrossOrigin(origins = "http://localhost:4200/")
 public class LivroController {
     @Autowired
     LivroRepository livroRepository;
