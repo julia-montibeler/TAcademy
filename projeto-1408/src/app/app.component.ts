@@ -22,6 +22,7 @@ export class AppComponent implements OnInit{
   }
 
   getLivros(): void {
+    console.log("oi");
     this.livroService.getLivro().subscribe(
       (response) => {
         this.livros = response;
