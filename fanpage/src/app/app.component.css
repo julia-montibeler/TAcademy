@@ -1,0 +1,17 @@
+.container{
+    width: 100%;
+}
+
+.row {
+    width: 100%;
+}
+
+app-track {
+    margin-left: 2.5%;
+    margin-bottom: 2%;
+}
+
+h1 {
+    margin: 2%;
+    text-align: center;
+}

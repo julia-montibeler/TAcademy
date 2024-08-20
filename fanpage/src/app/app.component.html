@@ -1,0 +1,39 @@
+<div class="container">
+  <header class="d-flex justify-content-center py-3">
+    <ul class="nav nav-pills">
+      <li class="nav-item"><a href="http://localhost:8888" class="nav-link active" style="background-color: #FFB6C1;" aria-current="page">Login</a></li>
+      <li class="nav-item"><a href="#top-tracks" class="nav-link" style="color: black;">Top Tracks</a></li>
+      <li class="nav-item"><a href="#albuns" class="nav-link" style="color: black;">Albums</a></li>
+      <li class="nav-item"><a href="#singles" class="nav-link" style="color: black;">Singles</a></li>
+    </ul>
+  </header>
+</div>
+
+<app-header></app-header>
+
+<div>
+  <h1 id="top-tracks">Top Tracks</h1>
+  <div class="container">
+    <div class="row">
+        <app-track *ngFor="let track of topTracks; let i = index" [track]="track" [pos] = "i+1" class="col-2"></app-track>
+    </div>
+  </div>
+</div>
+
+<div>
+    <h1 id="albuns"> Albums</h1>
+    <div class="container">
+      <div class="row">
+          <app-album *ngFor="let album of albums" [album]="album" class="col-lg-4 col-md-4 col-6"></app-album>
+      </div>
+    </div>
+</div>
+
+<div>
+  <h1 id="singles">Singles</h1>
+  <div class="container">
+    <div class="row">
+        <app-album *ngFor="let single of singles" [album]="single" class="col-lg-3 col-md-4 col-6"></app-album>
+    </div>
+  </div>
+</div>
