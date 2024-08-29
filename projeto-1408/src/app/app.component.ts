@@ -16,7 +16,6 @@ export class AppComponent implements OnInit{
   livros: Livro[] = [];
 
   constructor(private livroService: LivroService) {}
-0
   ngOnInit(): void {
     this.getLivros();
   }
