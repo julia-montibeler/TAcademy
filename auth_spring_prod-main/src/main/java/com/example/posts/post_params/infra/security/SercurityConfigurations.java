@@ -33,6 +33,7 @@ public class SercurityConfigurations {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/auth/profile").permitAll()
                         .requestMatchers(HttpMethod.POST, "/consultas").hasAnyRole("ADMIN", "MEDICO", "RECEPCIONISTA")
                         .requestMatchers(HttpMethod.GET, "/consultas").hasAnyRole("ADMIN", "MEDICO", "PACIENTE")
                         .anyRequest().authenticated()
