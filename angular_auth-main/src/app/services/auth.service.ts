@@ -3,21 +3,27 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Login } from '../models/login';
 import { User } from '../models/user';
+
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  url = "http://localhost:8080/auth/"
+  private url = "http://localhost:8080/auth";
 
   constructor(private httpClient: HttpClient) { }
 
-  login(login:Login):Observable<Login> {
-    return this.httpClient.post<Login>(this.url+"login",login)
+  login(login: Login): Observable<any> {
+    return this.httpClient.post<any>(this.url + '/login', login);
+  }  
+  
+ 
+  register(user: User): Observable<any> {
+    return this.httpClient.post<any>(this.url + '/register', user);
   }
 
-  // getCurrentUser():Observable<User>{
-  //   return this.httpClient.get<User>(this.url+"profile")
-  // }
+  logout(user: User): Observable<any> {
+    return this.httpClient.post<any>(this.url + '/logout', user);
+  }
 
 }

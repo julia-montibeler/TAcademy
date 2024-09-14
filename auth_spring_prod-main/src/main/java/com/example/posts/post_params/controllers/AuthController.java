@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.util.StringUtils;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("auth")
 public class AuthController {
@@ -37,10 +39,7 @@ public class AuthController {
     private UserRepository userRepository;
     @Autowired
     private TokenService tokenService;
-
-
-//    @GetMapping("/profile")
-//    public ResponseEntity<UserDTO> profile()
+    
 
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody @Valid AuthDTO data){
