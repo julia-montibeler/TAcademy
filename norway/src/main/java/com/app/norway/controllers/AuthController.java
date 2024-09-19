@@ -1,34 +1,30 @@
-package com.example.posts.post_params.controllers;
+package com.app.norway.controllers;
 
-import com.example.posts.post_params.domain.user.*;
-import com.example.posts.post_params.infra.security.TokenService;
-import com.example.posts.post_params.respositories.UserRepository;
-import com.example.posts.post_params.services.InMemoryTokenBlacklist;
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletException;
+import com.app.norway.dtos.AuthDto;
+import com.app.norway.dtos.RegisterDto;
+import com.app.norway.models.User;
+import com.app.norway.repositories.UserRepository;
+import com.app.norway.services.LogoutService;
+import com.app.norway.services.TokenService;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
-import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.io.IOException;
-
-@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("auth")
 public class AuthController {
 
     @Autowired
-    InMemoryTokenBlacklist tokenBlacklist = new InMemoryTokenBlacklist();
+    LogoutService logoutService = new LogoutService();
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -42,31 +38,31 @@ public class AuthController {
 
 
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody @Valid AuthDTO data){
+    public ResponseEntity login(@RequestBody @Valid AuthDto data){
         var usernamePassword = new UsernamePasswordAuthenticationToken(data.login(), data.password());
         var auth =  this.authenticationManager.authenticate(usernamePassword);
 
         var token = tokenService.gerenateToken((User) auth.getPrincipal());
 
-        return ResponseEntity.ok(new LoginResponseDTO(token));
+        return ResponseEntity.ok(token);
     }
 
     @PostMapping("/register")
-    public ResponseEntity<User> register(@RequestBody @Valid RegisterDTO data){
+    public ResponseEntity<User> register(@RequestBody @Valid RegisterDto data){
         if(this.userRepository.findByLogin(data.login()) != null ) return ResponseEntity.badRequest().build();
 
         String encryptedPassword =  new BCryptPasswordEncoder().encode(data.password());
 
-        this.userRepository.save(new User(data.login(), encryptedPassword, data.role()));
+        this.userRepository.save(new User(data.login(), encryptedPassword, data.name()));
 
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/logout")
     public ResponseEntity<String> logout(HttpServletRequest request) {
-        String token = tokenBlacklist.extractTokenFromRequest(request);
+        String token = logoutService.extractTokenFromRequest(request);
 
-        tokenBlacklist.addToBlacklist(token);
+        logoutService.addToBlacklist(token);
 
         return ResponseEntity.ok("Logged out successfully");
     }
